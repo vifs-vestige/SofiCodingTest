@@ -3,4 +3,5 @@ public class result {
     public String logo_path;
     public String name;
 
+
 }

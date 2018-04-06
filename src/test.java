@@ -23,8 +23,12 @@ public class test {
                 }
         ));
 
+        searchRequest request = new searchRequest("3b41ccc422d320281eb66cac655d7703", "butts");
 
+        String test = request.GetURL();
 
-        searchResponse temp = get("https://api.themoviedb.org/3/search/company?api_key=3b41ccc422d320281eb66cac655d7703&query=disney&page=1\n").as(searchResponse.class);
+        searchResponse temp = get(request.GetURL()).as(searchResponse.class);
+
+        int s = 5;
     }
 }
