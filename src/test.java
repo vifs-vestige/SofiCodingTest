@@ -42,7 +42,7 @@ public class test {
     public void MoreThenOnePage(){
         searchRequest request = new searchRequest(ApiKey, "Disney");
         searchResponse response = Helper.GetResponse(request);
-        assert response.total_pages > 12;
+        assert response.total_pages > 1;
 
     }
 
