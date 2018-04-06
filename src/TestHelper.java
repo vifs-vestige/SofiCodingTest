@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.mapper.factory.Jackson2ObjectMapperFactory;
+import io.restassured.response.Response;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -49,7 +50,25 @@ public class TestHelper {
         return ApiKey;
     }
 
+
+    //would be better to make searchResponse inherit from an interface
+    //then have another class that holds a response object and that interface
+    //then you can cast the interface back to the class sense you know what it will be in the test
+    //with that you would have access to the json response and the meta data
     public searchResponse GetResponse(searchRequest request){
         return get(request.GetURL()).as(searchResponse.class);
+    }
+
+
+    //was going to add other assert helpers for comparing ints
+    //to much effort for coding challenge
+    //could of done something with enum and switch for dealing with different arithmetic operators
+    public void assertHelp(String expected, String outcome){
+        try{
+            assert expected.equals(outcome);
+        }
+        catch (AssertionError e){
+            throw new AssertionError("\n\toutcome: " + outcome + "\n\texcepted: " + expected);
+        }
     }
 }

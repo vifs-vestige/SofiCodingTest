@@ -6,4 +6,7 @@ public class searchResponse {
     public int total_pages;
     public int total_results;
 
+    public int status_code;
+    public String status_message;
+
 }
