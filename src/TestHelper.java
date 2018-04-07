@@ -1,7 +1,5 @@
 import RequestRepsonseObjects.RequestObject;
 import RequestRepsonseObjects.ResponseObject;
-import RequestRepsonseObjects.searchRequest;
-import RequestRepsonseObjects.searchResponse;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;

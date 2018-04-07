@@ -1,7 +1,5 @@
 package RequestRepsonseObjects;
 
-import RequestRepsonseObjects.result;
-import io.restassured.response.*;
 
 import java.util.List;
 
