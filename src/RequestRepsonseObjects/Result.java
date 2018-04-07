@@ -1,6 +1,6 @@
 package RequestRepsonseObjects;
 
-public class result {
+public class Result {
     public int id;
     public String logo_path;
     public String name;

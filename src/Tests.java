@@ -1,16 +1,16 @@
-import RequestRepsonseObjects.searchRequest;
-import RequestRepsonseObjects.searchResponse;
+import RequestRepsonseObjects.SearchRequest;
+import RequestRepsonseObjects.SearchResponse;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-public class test {
+public class Tests {
     private String ApiKey;
     private TestHelper Helper;
 
-    private searchResponse GetResponse(searchRequest request){
-        return (searchResponse)Helper.GetResponse(request, searchResponse.class);
+    private SearchResponse GetResponse(SearchRequest request){
+        return (SearchResponse)Helper.GetResponse(request, SearchResponse.class);
     }
 
     @BeforeClass
@@ -23,8 +23,8 @@ public class test {
 
     @Test
     public void NoResults(){
-        searchRequest request = new searchRequest(ApiKey, "Better be no results");
-        searchResponse response = GetResponse(request);
+        SearchRequest request = new SearchRequest(ApiKey, "Better be no results");
+        SearchResponse response = GetResponse(request);
         Assert.assertEquals(response.results.size(), 0);
         Assert.assertEquals(response.total_results, 0);
         Assert.assertEquals(response.response.getStatusCode(), 200);
@@ -32,8 +32,8 @@ public class test {
 
     @Test
     public void OneResult(){
-        searchRequest request = new searchRequest(ApiKey, "Pixar");
-        searchResponse response = GetResponse(request);
+        SearchRequest request = new SearchRequest(ApiKey, "Pixar");
+        SearchResponse response = GetResponse(request);
         Assert.assertEquals(response.results.size(), 1);
         Assert.assertEquals(response.total_results, 1);
         Assert.assertEquals(response.results.get(0).name, "Pixar");
@@ -42,8 +42,8 @@ public class test {
 
     @Test
     public void MoreThenOnePage(){
-        searchRequest request = new searchRequest(ApiKey, "Disney");
-        searchResponse response = GetResponse(request);
+        SearchRequest request = new SearchRequest(ApiKey, "Disney");
+        SearchResponse response = GetResponse(request);
         Assert.assertNotEquals(response.total_pages, 1);
         Assert.assertEquals(response.response.getStatusCode(), 200);
 
@@ -51,8 +51,8 @@ public class test {
 
     @Test
     public void BadApiKey(){
-        searchRequest request = new searchRequest("a", "Disney");
-        searchResponse response = GetResponse(request);
+        SearchRequest request = new SearchRequest("a", "Disney");
+        SearchResponse response = GetResponse(request);
         Assert.assertEquals(response.status_code, 7);
         Assert.assertEquals(response.status_message, "Invalid API key: You must be granted a valid key.");
         Assert.assertEquals(response.response.getStatusCode(), 401);

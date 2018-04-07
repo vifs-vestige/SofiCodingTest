@@ -2,18 +2,18 @@ package RequestRepsonseObjects;
 
 
 
-public class searchRequest extends RequestObject{
+public class SearchRequest extends RequestObject{
     private String ApiKey;
     private String Query;
     private Integer Page;
 
-    private String url = "https://api.themoviedb.org/3/search/company?";
+    private String Url = "https://api.themoviedb.org/3/search/company?";
 
-    public searchRequest(String api_key, String query){
+    public SearchRequest(String api_key, String query){
         this(api_key, query, null);
     }
 
-    public searchRequest(String api_key, String query, Integer page){
+    public SearchRequest(String api_key, String query, Integer page){
         ApiKey = api_key;
         Query = query;
         Page = page;
@@ -22,12 +22,12 @@ public class searchRequest extends RequestObject{
     public String GetURL(){
         String temp;
         if(Page == null) {
-            temp = url +
+            temp = Url +
                     "api_key=" + ApiKey +
                     "&query=" + Query;
         }
         else{
-            temp = url +
+            temp = Url +
                     "api_key=" + ApiKey +
                     "&query=" + Query +
                     "&page=" + Page;
