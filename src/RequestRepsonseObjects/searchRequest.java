@@ -1,6 +1,8 @@
-import java.net.URLEncoder;
+package RequestRepsonseObjects;
 
-public class searchRequest {
+
+
+public class searchRequest extends RequestObject{
     private String ApiKey;
     private String Query;
     private Integer Page;

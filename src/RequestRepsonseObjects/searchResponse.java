@@ -1,6 +1,11 @@
+package RequestRepsonseObjects;
+
+import RequestRepsonseObjects.result;
+import io.restassured.response.*;
+
 import java.util.List;
 
-public class searchResponse {
+public class searchResponse extends ResponseObject{
     public int page;
     public List<result> results;
     public int total_pages;

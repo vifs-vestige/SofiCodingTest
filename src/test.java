@@ -1,57 +1,61 @@
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.RestAssured;
-import io.restassured.config.ObjectMapperConfig;
-import io.restassured.config.RestAssuredConfig;
-import io.restassured.mapper.factory.Jackson2ObjectMapperFactory;
+import RequestRepsonseObjects.searchRequest;
+import RequestRepsonseObjects.searchResponse;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static io.restassured.RestAssured.*;
 
 public class test {
     private String ApiKey;
     private TestHelper Helper;
 
+    private searchResponse GetResponse(searchRequest request){
+        return (searchResponse)Helper.GetResponse(request, searchResponse.class);
+    }
+
     @BeforeClass
     public void RunBefore(){
-        Helper = new TestHelper();
+        Helper = TestHelper.GetHelper();
         ApiKey = Helper.GetApiKey();
     }
+
 
 
     @Test
     public void NoResults(){
         searchRequest request = new searchRequest(ApiKey, "Better be no results");
-        searchResponse response = Helper.GetResponse(request);
-        assert response.results == null;
-        assert response.total_results == 0;
+        searchResponse response = GetResponse(request);
+        Assert.assertEquals(response.results.size(), 0);
+        Assert.assertEquals(response.total_results, 0);
+        Assert.assertEquals(response.response.getStatusCode(), 200);
     }
 
     @Test
     public void OneResult(){
         searchRequest request = new searchRequest(ApiKey, "Pixar");
-        searchResponse response = Helper.GetResponse(request);
-        assert response.results.size() == 1;
-        assert response.total_results == 1;
-        Helper.assertHelp("Pixar", response.results.get(0).name);
-
+        searchResponse response = GetResponse(request);
+        Assert.assertEquals(response.results.size(), 1);
+        Assert.assertEquals(response.total_results, 1);
+        Assert.assertEquals(response.results.get(0).name, "Pixar");
+        Assert.assertEquals(response.response.getStatusCode(), 200);
     }
 
     @Test
     public void MoreThenOnePage(){
         searchRequest request = new searchRequest(ApiKey, "Disney");
-        searchResponse response = Helper.GetResponse(request);
-        assert response.total_pages > 1;
+        searchResponse response = GetResponse(request);
+        Assert.assertNotEquals(response.total_pages, 1);
+        Assert.assertEquals(response.response.getStatusCode(), 200);
 
     }
 
     @Test
     public void BadApiKey(){
         searchRequest request = new searchRequest("a", "Disney");
-        searchResponse response = Helper.GetResponse(request);
-        assert response.status_code == 7;
-        Helper.assertHelp("Invalid API key: You must be granted a valid key.", response.status_message);
+        searchResponse response = GetResponse(request);
+        Assert.assertEquals(response.status_code, 7);
+        Assert.assertEquals(response.status_message, "Invalid API key: You must be granted a valid key.");
+        Assert.assertEquals(response.response.getStatusCode(), 401);
     }
 
     //TODO:
